@@ -22,7 +22,7 @@ def main():
     childPID = os.fork()
 
     if childPID == -1:
-        print("[ERRO] - Could not initiate agent in memory")
+        print("[ERROR] - Could not initiate agent in memory")
         exit()
 
     elif childPID == 0:
