@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var servAddr = flag.String("addr", "127.0.0.1:8082", "http service address")
+var servAddr = flag.String("addr", "192.168.146.133:8082", "http service address")
 var done chan interface{}
 var interrupt chan os.Signal
 

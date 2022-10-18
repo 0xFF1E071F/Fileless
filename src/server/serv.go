@@ -35,5 +35,5 @@ func wsHandle(w http.ResponseWriter, r *http.Request) {
 }
 func startServ() {
 	http.HandleFunc("/init", wsHandle)
-	log.Fatal(http.ListenAndServe(":8082", nil))
+	log.Fatal(http.ListenAndServe("192.168.146.133:8082", nil))
 }
