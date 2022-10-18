@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var servAddr = flag.String("addr", "192.168.146.133:8082", "http service address")
+var servAddr = flag.String("addr", "127.0.0.1:8082", "http service address")
 var done chan interface{}
 var interrupt chan os.Signal
 
@@ -44,14 +44,13 @@ func initClient() {
 	go recvHandler(ws)
 
 	for {
+		cmd := fmt.Sprintf(arrayToString(sysInfo.Machine))
+		err := ws.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("%s", cmd)))
+		if err != nil {
+			log.Print("Error while sending: ", err)
+			break
+		}
 		select {
-		case <-time.After(time.Duration(1) * time.Millisecond * 1000):
-			err := ws.WriteMessage(websocket.TextMessage, []byte("Hello from agent"))
-			if err != nil {
-				log.Print("Error while sending: ", err)
-				return
-			}
-
 		case <-interrupt:
 			log.Print("Received SIGINT interrupt, closing")
 

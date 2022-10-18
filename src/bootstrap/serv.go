@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -18,22 +19,25 @@ func wsHandle(w http.ResponseWriter, r *http.Request) {
 
 	defer ws.Close()
 
-	for {
+	for { // Handling of the request will go here
 		msgType, msg, err := ws.ReadMessage()
 		if err != nil {
 			log.Print("Error while reading: ", err)
 			break
 		}
 
-		fmt.Println("Received: ", string(msg))
+		go handleInit(ws, msg, msgType)
+		/*
 		err = ws.WriteMessage(msgType, []byte("Hello from server"))
 		if err != nil {
 			log.Print("Error during sending: ", err)
 			break
 		}
+		*/
 	}
 }
 func startServ() {
 	http.HandleFunc("/init", wsHandle)
-	log.Fatal(http.ListenAndServe("192.168.146.133:8082", nil))
+	fmt.Println("[INFO] - Started webserver successfully")
+	log.Fatal(http.ListenAndServe(":8082", nil))
 }
