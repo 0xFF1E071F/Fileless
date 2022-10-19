@@ -4,6 +4,9 @@ build_src:
 	
 	@echo "[+] - Building the agent"
 	go build -o build/agent src/agent/*.go
+	
+	@echo "[+]  - Copying the stager"
+	cp stager/stager.py build/stager.py
 
 	@echo "Building finished!"
 

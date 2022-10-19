@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -11,6 +12,7 @@ import (
 var upgrader = websocket.Upgrader{}
 
 func wsHandle(w http.ResponseWriter, r *http.Request) {
+	IP := strings.Split(r.RemoteAddr, ":")[0]
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Print("Error while upgrading: ", err)
@@ -26,7 +28,7 @@ func wsHandle(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		go handleInit(ws, msg, msgType)
+		go handleInit(ws, msg, msgType, IP)
 		/*
 		err = ws.WriteMessage(msgType, []byte("Hello from server"))
 		if err != nil {

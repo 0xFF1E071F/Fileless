@@ -5,8 +5,9 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-func handleInit(ws *websocket.Conn, cmd []byte, msgType int) {
+func handleInit(ws *websocket.Conn, cmd []byte, msgType int, IP string) {
 	if (string(cmd) == "x86_64" || string(cmd) == "x86") {
+		db.insertNode(IP)
 		fmt.Println("[INFO] - Node recognized")
 	}
 }
