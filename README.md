@@ -1,7 +1,7 @@
-# Welcome to my little Fileless malware project!
+# P2P Fileless Malware
 
-## About the stager
-In order to launch our malware on the system without introducing a file, I decided to use the memfd_create method to create a file in memory, which shares the same properties as a normal file.
+## How does the fileless part work?
+In order to make the malware work fileless, I used a python script that utilizes the memfd_create syscall in Linux to create an anonymous file in memory. That file has the exact same properties as a normal file, but lives in RAM. Therefore, we can retrieve the bytes of the malware from a webserver and write it straight to memory.
 
-## About the agent
-The future agent will be able to use a P2P network. I am not sure yet if this will be permanent or only used as a fallback when the C2 dies.
+## How does the malware communicate?
+The network architecture will be peer to peer. As protocol I chose to use WebSockets.
