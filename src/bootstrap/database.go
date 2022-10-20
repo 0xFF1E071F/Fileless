@@ -16,6 +16,8 @@ func initDatabase(user, password, IP, dbName string) *database {
 		fmt.Println(err.Error())
 		return nil
 	}
+
+	fmt.Println("[INFO] - Database connection established!")
 	return &database{db}
 }
 

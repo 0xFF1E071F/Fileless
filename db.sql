@@ -2,5 +2,6 @@ CREATE DATABASE bootstrap;
 USE bootstrap;
 
 CREATE TABLE nodes (
-	IP varchar(255)
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	IP varchar(255) NOT NULL
 );
