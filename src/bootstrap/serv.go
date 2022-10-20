@@ -38,8 +38,8 @@ func wsHandle(w http.ResponseWriter, r *http.Request) {
 		*/
 	}
 }
-func startServ() {
+func startServ(IP string, port int) {
 	http.HandleFunc("/init", wsHandle)
 	fmt.Println("[INFO] - Started webserver successfully")
-	log.Fatal(http.ListenAndServe(":8082", nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%d", IP, port), nil))
 }

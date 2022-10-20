@@ -11,7 +11,7 @@ type database struct {
 }
 
 func initDatabase(user, password, IP, dbName string) *database {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s", user, password, IP, dbName))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:3306)/%s", user, password, IP, dbName))
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil

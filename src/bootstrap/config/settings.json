@@ -1,0 +1,13 @@
+{
+	"Webserver": {
+		"IP": "127.0.0.1",
+		"Port": 8082
+	},
+
+	"Database": {
+		"IP": "127.0.0.1",
+		"User": "bootstrap",
+		"Password": "bootstrap",
+		"DbName": "bootstrap"
+	}
+}
