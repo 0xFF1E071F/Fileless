@@ -2,5 +2,9 @@ package main
 
 func main() {
 	initRecon()
-	initClient()
+	if (arrayToString(sysInfo.Machine) == "x86" || arrayToString(sysInfo.Machine) == "x86_64") {
+		initNode()
+	} else {
+		initClient()
+	}
 }

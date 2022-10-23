@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"flag"
 	"os"
 	"time"
 	"net/url"
@@ -11,7 +10,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var servAddr = flag.String("addr", "127.0.0.1:8082", "http service address")
 var done chan interface{}
 var interrupt chan os.Signal
 
@@ -33,7 +31,7 @@ func initClient() {
 	done = make(chan interface{})
 	interrupt = make(chan os.Signal)
 	
-	servURL := url.URL{Scheme: "ws", Host: *servAddr, Path: "/init"} 
+	servURL := url.URL{Scheme: "ws", Host: servAddr, Path: "/init"} 
 	ws, _, err := websocket.DefaultDialer.Dial(servURL.String(), nil)
 	if err != nil {
 		log.Print("Error while dialing: ", err)
