@@ -11,7 +11,7 @@ func registerNode() bool {
 		"Arch": {arrayToString(sysInfo.Machine)},
 	}
 
-	_, err := http.PostForm(fmt.Sprintf("http://%s", servAddr), data)
+	_, err := http.PostForm(fmt.Sprintf("http://%s/registerNode", servAddr), data)
 	if err != nil {
 		fmt.Println(err)
 		return false

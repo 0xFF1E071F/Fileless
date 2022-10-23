@@ -4,6 +4,8 @@ import (
 	"strings"
 )
 
+var servAddr = "127.0.0.1:8082"
+
 func arrayToString(x [65]int8) string {
    var buf [65]byte
    for i, b := range x {
