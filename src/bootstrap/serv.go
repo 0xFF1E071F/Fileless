@@ -27,8 +27,9 @@ func wsHandle(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-
-		err = ws.WriteMessage(msgType, []byte("Hello from server"))
+		// TODO: Retrieving node IP list from database
+		nodeIP := db.getNode()
+		err = ws.WriteMessage(msgType, []byte(nodeIP))
 		if err != nil {
 			log.Print("Error during sending: ", err)
 			break

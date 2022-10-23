@@ -22,6 +22,7 @@ func registerNode() bool {
 
 func handleCmd(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, to your node new agent!")
+	fmt.Println("[INFO] ⁻ An agent sent something, whoo!")
 }
 
 func initServer() {

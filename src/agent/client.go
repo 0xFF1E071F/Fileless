@@ -13,9 +13,8 @@ import (
 var done chan interface{}
 var interrupt chan os.Signal
 
-func recvHandler(conn *websocket.Conn) {
+func recvBootstrap(conn *websocket.Conn) {
 	defer close(done)
-
 	for {
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
@@ -25,9 +24,12 @@ func recvHandler(conn *websocket.Conn) {
 
 		fmt.Println("Received: ", string(msg))
 	}
+
+	conn.Close()
+	return
 }
 
-func initClient() {
+func callBootstrap() {
 	done = make(chan interface{})
 	interrupt = make(chan os.Signal)
 	
@@ -39,7 +41,7 @@ func initClient() {
 	}
 
 	defer ws.Close()
-	go recvHandler(ws)
+	go recvBootstrap(ws)
 
 	for {
 		cmd := fmt.Sprintf(arrayToString(sysInfo.Machine))
