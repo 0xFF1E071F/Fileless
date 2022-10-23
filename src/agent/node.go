@@ -20,7 +20,18 @@ func registerNode() bool {
 	return true
 }
 
+func handleCmd(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, to your node new agent!")
+}
+
+func initServer() {
+	http.HandleFunc("/cmd", handleCmd)
+	http.ListenAndServe("0.0.0.0:1337", nil)
+}
+
 func initNode() {
 	// Registering the node in the bootstrap server
-	registerNode()
+	if(registerNode()) {
+		initServer()
+	}
 }
