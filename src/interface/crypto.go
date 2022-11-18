@@ -18,8 +18,6 @@ var PrivKeyBase string
 var (
   PubKey      crypto.PublicKey
   PrivKey     crypto.PrivateKey
-  PubKeyBase  string
-  PrivKeyBase string
 )
 
 func generateKeypairs() {
@@ -40,12 +38,9 @@ func generateKeypairs() {
   PubKey = pubKey
   PrivKey = privKey
 
-  PubKeyBase = base64.StdEncoding.EncodeToString([]byte(PubKey))
-  PrivKeyBase = base64.StdEncoding.EncodeToString([]byte(PrivKey))
-  
   // Writing the keypairs to the keys folder
-  WriteToFile([]byte(PubKeyBase), "keys/ed25519.pub")
-  WriteToFile([]byte(PrivKeyBase), "keys/ed25519")
+  WriteToFile([]byte(base64.StdEncoding.EncodeToString([]byte(PubKey))), "keys/ed25519.pub")
+  WriteToFile([]byte(base64.StdEncoding.EncodeToString([]byte(PrivKey))), "keys/ed25519")
 }
 
 func SignCmd(cmd string) string {
@@ -60,3 +55,7 @@ func InitCrypto() {
   generateKeypairs()
 }
 
+func main() {
+  InitCrypto()
+  fmt.Println(SignCmd("test123"))
+}
