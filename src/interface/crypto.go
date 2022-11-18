@@ -2,17 +2,25 @@ package main
 
 import (
   "fmt"
-  "io/ioutil"
   "encoding/base64"
 
   crypto "crypto/ed25519"
   "crypto/md5"
 )
 
+/*
 var PubKey crypto.PublicKey
 var PrivKey crypto.PrivateKey
 var PubKeyBase string
 var PrivKeyBase string
+*/
+
+var (
+  PubKey      crypto.PublicKey
+  PrivKey     crypto.PrivateKey
+  PubKeyBase  string
+  PrivKeyBase string
+)
 
 func generateKeypairs() {
   /*
@@ -20,6 +28,12 @@ func generateKeypairs() {
 
     - Optimizing the body of this function
   */
+  
+  if FileExists("keys/ed25519") && FileExists("keys/ed25519.pub") {
+    ReadKeys()
+    return
+  }
+
   pubKey, privKey, err := crypto.GenerateKey(nil)
   CheckErr(err)
 
@@ -28,25 +42,15 @@ func generateKeypairs() {
 
   PubKeyBase = base64.StdEncoding.EncodeToString([]byte(PubKey))
   PrivKeyBase = base64.StdEncoding.EncodeToString([]byte(PrivKey))
+  
   // Writing the keypairs to the keys folder
-
-  err = ioutil.WriteFile("keys/ed25519.pub", []byte(PubKeyBase), 0644)
-  CheckErr(err)
-
-  err = ioutil.WriteFile("keys/ed25519", []byte(PrivKeyBase), 0644)
-  CheckErr(err)
+  WriteToFile([]byte(PubKeyBase), "keys/ed25519.pub")
+  WriteToFile([]byte(PrivKeyBase), "keys/ed25519")
 }
 
 func SignCmd(cmd string) string {
-  /* 
-    TODO:
-    
-    - Optimizing the body of this function
-  */
-
-  fmt.Println("Private key: ", PrivKey)
   hashSlice := md5.Sum([]byte(cmd))
-  cmdMD5 := hashSlice[:]
+  cmdMD5 := hashSlice[:] // Converting from [size]byte to []byte
   signedCmd := crypto.Sign(PrivKey, cmdMD5)
 
   return base64.StdEncoding.EncodeToString(signedCmd) 
