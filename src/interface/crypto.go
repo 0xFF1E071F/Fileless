@@ -8,13 +8,6 @@ import (
   "crypto/md5"
 )
 
-/*
-var PubKey crypto.PublicKey
-var PrivKey crypto.PrivateKey
-var PubKeyBase string
-var PrivKeyBase string
-*/
-
 var (
   PubKey      crypto.PublicKey
   PrivKey     crypto.PrivateKey
