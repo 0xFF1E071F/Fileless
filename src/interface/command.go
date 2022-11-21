@@ -38,8 +38,8 @@ func ExecCommand(handle *CmdHandle) {
       return
     }
 
-
     fmt.Println(fmt.Sprintf("Broadcasting command %s to agents.", handle.Name))
+    BroadcastCommand(handle)
     return
 	}
 
