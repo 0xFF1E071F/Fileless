@@ -40,9 +40,6 @@ func Help(handle *CmdHandle) {
 
 		fmt.Println(fmt.Sprintf("Usage: %s", cmd.Usage))
 		return
-	} else {
-		fmt.Println("Too many arguments specified.")
-		return
 	}
 
 	fmt.Println("List of possible commands")

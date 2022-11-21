@@ -8,12 +8,12 @@ import (
 type CmdHandler func(handle *CmdHandle)
 
 type CmdHandle struct {
-	Name string
+	Name  string
 	Args []string
 }
 
 type Command struct {
-	Name 		string
+	Name 		    string
 	Description string
 	Usage       string
 	Handle 	    CmdHandler
@@ -23,7 +23,7 @@ func LoadCommand(cmd Command) {
 	_, ok := Commands[cmd.Name]
 
 	if ok { //Command already loaded
-		return;
+		return
 	}
 
 	Commands[cmd.Name] = cmd
@@ -32,8 +32,15 @@ func LoadCommand(cmd Command) {
 func ExecCommand(handle *CmdHandle) {
 	cmd, success := Commands[handle.Name]
 	if !success {
-		fmt.Println("This command does not exist.")
-		return
+		_, success := AgentCommands[handle.Name]
+    if !success {
+      fmt.Println("This command does not exist.")
+      return
+    }
+
+
+    fmt.Println(fmt.Sprintf("Broadcasting command %s to agents.", handle.Name))
+    return
 	}
 
 	cmd.Handle(handle)

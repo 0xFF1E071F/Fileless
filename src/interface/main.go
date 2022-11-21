@@ -32,5 +32,6 @@ func initInterface() {
 
 func main() {
 	LoadCommands()
+  InitCrypto()
 	initInterface()
 }

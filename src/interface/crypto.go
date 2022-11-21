@@ -1,7 +1,6 @@
 package main
 
 import (
-  "fmt"
   "encoding/base64"
 
   crypto "crypto/ed25519"
@@ -48,7 +47,3 @@ func InitCrypto() {
   generateKeypairs()
 }
 
-func main() {
-  InitCrypto()
-  fmt.Println(SignCmd("test123"))
-}

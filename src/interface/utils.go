@@ -6,6 +6,7 @@ import (
   "os"
 
   "encoding/base64"
+  "encoding/json"
 )
 
 func CheckErr(err error) {
@@ -43,4 +44,11 @@ func ReadKeys() {
 
   PubKey = pubKey
   PrivKey = privKey
+}
+
+func StructToJson(cmd AgentCommand) []byte {
+  res, err := json.Marshal(cmd)
+  CheckErr(err)
+
+  return res
 }
