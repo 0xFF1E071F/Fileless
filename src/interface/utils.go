@@ -1,57 +1,56 @@
 package main
 
 import (
-  "log"
-  "os"
-  "io/ioutil"
-  "encoding/base64"
-  "encoding/json"
-  "crypto/rand"
-  "math/big"
+	"crypto/rand"
+	"encoding/base64"
+	"encoding/json"
+	"log"
+	"math/big"
+	"os"
 )
 
 func CheckErr(err error) {
-  if err != nil {
-    log.Fatal(err)
-    return
-  }
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 }
 
 func WriteToFile(txt []byte, path string) {
-  err := ioutil.WriteFile(path, txt, 0644)
-  CheckErr(err)
+	err := os.WriteFile(path, txt, 0644)
+	CheckErr(err)
 }
 
 func FileExists(filename string) bool {
-   info, err := os.Stat(filename)
-   if os.IsNotExist(err) {
-      return false
-   }
-   return !info.IsDir()
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }
 
 func ReadKeys() {
-  pubKey, err := ioutil.ReadFile("keys/ed25519.pub")
-  CheckErr(err)
+	pubKey, err := os.ReadFile("keys/ed25519.pub")
+	CheckErr(err)
 
-  privKey, err := ioutil.ReadFile("keys/ed25519")
-  CheckErr(err)
+	privKey, err := os.ReadFile("keys/ed25519")
+	CheckErr(err)
 
-  pubKey, err = base64.StdEncoding.DecodeString(string(pubKey))
-  CheckErr(err)
+	pubKey, err = base64.StdEncoding.DecodeString(string(pubKey))
+	CheckErr(err)
 
-  privKey, err = base64.StdEncoding.DecodeString(string(privKey))
-  CheckErr(err)
+	privKey, err = base64.StdEncoding.DecodeString(string(privKey))
+	CheckErr(err)
 
-  PubKey = pubKey
-  PrivKey = privKey
+	PubKey = pubKey
+	PrivKey = privKey
 }
 
 func StructToJson(cmd AgentCommand) []byte {
-  res, err := json.Marshal(cmd)
-  CheckErr(err)
+	res, err := json.Marshal(cmd)
+	CheckErr(err)
 
-  return res
+	return res
 }
 
 func GenerateRandomString(n int) string {
@@ -66,4 +65,3 @@ func GenerateRandomString(n int) string {
 
 	return string(ret)
 }
-
