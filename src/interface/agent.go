@@ -1,49 +1,40 @@
 package main
 
 import (
-  "fmt"
-  "encoding/json"
+  "net"
 )
 
-type AgentCommand struct {
-  ID        int
-  Args      []string
-  Salt      string
+var (
+  SessionList = make(map[int]*Agent)
+)
+
+type Agent struct {
+  SessionID int
+  conn      net.Conn
 }
 
-var AgentCommands map[string]AgentCommand = map[string]AgentCommand {
-  "ping": {
-    ID: 0x01,
-    Args: make([]string, 0),
-    Salt: "salt", //Should be generated when handling command
-  },
-
-  "die": {
-    ID: 0xDEAD,
-    Args: make([]string, 0),
-    Salt: "salt", //Should be generated when handling command
-  },
+func NewAgent(id int, c net.Conn) *Agent {
+  return &Agent{id, c}
 }
 
+func AddToSessions(agent *Agent) {
+  _, success := SessionList[agent.SessionID]
+  if success {
+    // What if ID already exists?
+    return 
+  }
 
-func BuildAgentCmd(handle *CmdHandle) (string, string){
-  agentCmd, _ := AgentCommands[handle.Name]
-  copy(agentCmd.Args, handle.Args) //Copying over the arguments
-
-  // Generating random salt
-  var salt string = GenerateRandomString(16)
-  agentCmd.Salt = salt 
-
-  cmd, err := json.Marshal(agentCmd)
-  CheckErr(err)
-
-  var sig string = SignCmd(string(cmd))
-
-  return string(cmd), sig
+  SessionList[agent.SessionID] = agent
 }
 
-func BroadcastCommand(handle *CmdHandle) {
-  _, sig := BuildAgentCmd(handle)
+func (this *Agent) Handle() {
+  this.conn.Write([]byte("Handling initiated...\n"))
+  /*
+    TODO:
+         - Adding transfering of public key
+         - Adding agent to sessions list (done)
+         - Removing agent when session closes
+  */
 
-  fmt.Println("Sig:", sig)
+  AddToSessions(this)
 }

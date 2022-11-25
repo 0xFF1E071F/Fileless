@@ -27,6 +27,15 @@ func LoadCommands() {
 	}
 
 	LoadCommand(exitCommand)
+
+  sessionsCommand := Command {
+    Name: "sessions",
+    Description: "Shows current sessions of compromised devices",
+    Usage: "(none)",
+    Handle: Sessions, 
+  }
+
+  LoadCommand(sessionsCommand)
 }
 
 func Help(handle *CmdHandle) {
@@ -51,5 +60,9 @@ func Help(handle *CmdHandle) {
 func Exit(handle *CmdHandle) {
 	fmt.Println("Byebye, until the next time!")
 	os.Exit(0)
+}
+
+func Sessions(handle *CmdHandle) {
+  fmt.Println(SessionList)
 }
 

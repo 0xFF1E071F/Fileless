@@ -33,5 +33,6 @@ func initInterface() {
 func main() {
 	LoadCommands()
   InitCrypto()
+  go InitTCPServ()
 	initInterface()
 }
